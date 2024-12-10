@@ -7,9 +7,6 @@ class Animal:
         self.hidden = False
         self.health = health
 
-    def __sub__(self, other: int) -> int:
-        return self.health - other
-
     def __repr__(self) -> str:
         return (f"{{Name: {self.name}, "
                 f"Health: {self.health}, "
@@ -25,6 +22,9 @@ class Carnivore(Animal):
     @staticmethod
     def bite(prey: Animal) -> None:
         if not prey.hidden and isinstance(prey, Herbivore):
-            prey.health -= 50
+            if prey.health < 50:
+                prey.health = 0
+            else:
+                prey.health -= 50
         if prey.health <= 0:
             Animal.alive.remove(prey)
